@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elite Barber — Estilo, precisão e confiança em cada corte</title>
+<meta name="description" content="Elite Barber — barbearia. Agende o seu corte, barba ou tratamento online.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===================== HEADER ===================== -->
+<header class="site-header">
+  <div class="nav-wrap">
+    <a href="#inicio" class="logo">ELITE <span>BARBER</span></a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false">☰</button>
+    <nav class="main-menu" id="mainMenu">
+      <ul>
+        <li><a href="#inicio" class="active">Início</a></li>
+        <li><a href="#servicos">Serviços</a></li>
+        <li><a href="#galeria">Galeria</a></li>
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+        <li><a href="admin.html">Painel Admin</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- ===================== HERO / BANNER ===================== -->
+<section class="hero" id="inicio">
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <span class="eyebrow">Barbearia de precisão</span>
+      <h1>Estilo, <em>precisão</em><br>e confiança<br>em cada corte</h1>
+      <p class="tagline">Da barba clássica aos afro waves mais nítidos: cada cliente sai com um corte à sua medida, feito por barbeiros que dominam a técnica e o detalhe.</p>
+      <a href="#agendar" class="btn">Agendar Agora</a>
+    </div>
+
+    <!-- Painel de cadastro / agendamento -->
+    <div class="ticket-card" id="agendar">
+      <h3>Agendar o meu corte</h3>
+      <form id="bookingForm" novalidate>
+        <div class="field" id="fieldNome">
+          <label for="nome">Nome completo</label>
+          <input type="text" id="nome" name="nome" placeholder="Ex: Carlos Sanhá" autocomplete="name" required>
+          <small class="error">O nome não pode conter números.</small>
+        </div>
+
+        <div class="field" id="fieldTelefone">
+          <label for="telefone">Número de telefone</label>
+          <input type="tel" id="telefone" name="telefone" placeholder="Ex: 955123456" inputmode="numeric" autocomplete="tel" required>
+          <small class="error">Introduza apenas números (9 a 12 dígitos).</small>
+        </div>
+
+        <div class="field" id="fieldEmail">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" placeholder="ex: nome@email.com" autocomplete="email" required>
+          <small class="error">Introduza um e-mail válido.</small>
+        </div>
+
+        <div class="field" id="fieldServico">
+          <label for="servico">Serviço</label>
+          <select id="servico" name="servico" required>
+            <option value="">Selecione um serviço</option>
+            <option value="Corte de cabelo">Corte de cabelo</option>
+            <option value="Barba">Barba</option>
+            <option value="Corte + Barba">Corte + Barba</option>
+            <option value="Tratamento capilar">Tratamento capilar</option>
+          </select>
+        </div>
+
+        <div class="field" id="fieldData">
+          <label for="data">Data</label>
+          <input type="date" id="data" name="data" required>
+        </div>
+
+        <div class="field" id="fieldHora">
+          <label for="hora">Horário disponível</label>
+          <select id="hora" name="hora" required>
+            <option value="">Selecione a data primeiro</option>
+          </select>
+          <small class="error">Escolha um horário disponível.</small>
+        </div>
+
+        <button type="submit" class="btn" id="submitBtn">Confirmar agendamento</button>
+        <div class="form-msg" id="formMsg"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<div class="pole-divider"></div>
+
+<!-- ===================== SERVIÇOS ===================== -->
+<section id="servicos">
+  <div class="container">
+    <span class="eyebrow">O que fazemos</span>
+    <h2 class="section-title">Serviços</h2>
+    <p class="section-lead">Quatro especialidades, um só padrão de qualidade: acabamento limpo, ferramentas desinfetadas e atenção a cada detalhe.</p>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <span class="num">01</span>
+        <h3>Corte de cabelo</h3>
+        <p>Fades, degradês e afro waves com risco definido e acabamento na régua.</p>
+        <span class="price">Desde 3000 XOF</span>
+      </div>
+      <div class="service-card">
+        <span class="num">02</span>
+        <h3>Barba</h3>
+        <p>Desenho, toalha quente e navalha para um contorno preciso.</p>
+        <span class="price">Desde 1000 XOF</span>
+      </div>
+      <div class="service-card">
+        <span class="num">03</span>
+        <h3>Corte + Barba</h3>
+        <p>O combo completo: cabelo e barba num só atendimento, com desconto.</p>
+        <span class="price">Desde 2500 XOF</span>
+      </div>
+      <div class="service-card">
+        <span class="num">04</span>
+        <h3>Tratamentos capilares</h3>
+        <p>Hidratação, tónico e cuidados específicos para couro cabeludo e fios.</p>
+        <span class="price">Desde 1500 XOF</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== GALERIA ===================== -->
+<section id="galeria" class="bg-alt">
+  <div class="container">
+    <span class="eyebrow">Trabalhos recentes</span>
+    <h2 class="section-title">Galeria</h2>
+    <p class="section-lead">Uma amostra dos cortes feitos na Elite Barber.</p>
+
+     <div class="gallery-grid">
+      <figure><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIS-IOrhH8fXkKdjXXFNZr2SOuTUdj3jTpoP8vo7xYjA&s=10" alt="Cliente a receber um corte de cabelo na barbearia"></figure>
+      <figure><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzSuFevfhDdbvKnBa8kxkQoV2-GwuuPriAFTAC5t1Nhg&s=10" alt="Acabamento de barba"></figure>
+      <figure><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToNPDJi4jmXbYLZLxKmekjvxcHLp6MieCDesIc-ogC2g&s=10" alt="Barbeiro e cliente durante o atendimento"></figure>
+      <figure><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSD04BlbLwE8dn3ESToh1ppOIOhwYvEXNwbvlS54YClYQ&s=10" alt="Estilo com tranças afro"></figure>
+      <figure><img src="https://images.pexels.com/photos/7697222/pexels-photo-7697222.jpeg?auto=compress&cs=tinysrgb&w=500" alt="Cliente na cadeira de barbearia"></figure>
+      <figure><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTj9EUr7vWhouxr671yLz-3tnJVWW2tDJDfe2uh6EafBw&s=10" alt="Penteado afro bem definido"></figure>
+      <figure><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR54IMEPHPcw2_Vb2pTdYWqiVCg_FiqIhCqOECeMjcAHA&s=10" alt="Cabelo encaracolado com estilo casual"></figure>
+      <figure><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeaQ66Pkv1FVEcLeyJVH5_a8GFSa6cIOcjPrm4n9-l8eW6uGeCE_ur_Fo&s=10" alt="Cliente durante o tratamento capilar"></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SOBRE ===================== -->
+<section id="sobre">
+  <div class="container">
+    <span class="eyebrow">A nossa história</span>
+    <h2 class="section-title">Sobre a Elite Barber</h2>
+    <p class="section-lead" style="max-width:760px;">
+      A Elite Barber nasceu do gosto pelo detalhe: cada risco, cada linha de barba e cada acabamento é tratado como uma assinatura. A nossa equipa combina técnica clássica de barbeiro com as tendências mais atuais — do afro waves ao fade moderno — num espaço pensado para o conforto do cliente do início ao fim do atendimento.
+    </p>
+  </div>
+</section>
+
+<div class="pole-divider"></div>
+
+<!-- ===================== DEPOIMENTOS ===================== -->
+<section class="bg-alt">
+  <div class="container">
+    <span class="eyebrow">Quem já passou por aqui</span>
+    <h2 class="section-title">Depoimentos</h2>
+    <p class="section-lead">A opinião de quem confia na Elite Barber.</p>
+
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="quote">Marquei o meu horário em dois minutos pelo site e não esperei nada quando cheguei. Corte impecável.</p>
+        <div class="author">
+          <div class="avatar">JS</div>
+          <div><strong>João Silva</strong><span>Cliente há 2 anos</span></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="quote">Melhor fade que já fiz na cidade. O sistema de agendamento online facilita muito a vida.</p>
+        <div class="author">
+          <div class="avatar">MT</div>
+          <div><strong>Miguel Té</strong><span>Cliente fiel</span></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="quote">Ambiente agradável, atendimento pontual e o resultado do afro waves ficou perfeito.</p>
+        <div class="author">
+          <div class="avatar">AB</div>
+          <div><strong>André Barbosa</strong><span>Novo cliente</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== LOCALIZAÇÃO E CONTACTO ===================== -->
+<section id="contacto">
+  <div class="container">
+    <span class="eyebrow">Onde estamos</span>
+    <h2 class="section-title">Localização &amp; Contacto</h2>
+    <p class="section-lead">Venha conhecer o espaço ou marque o seu horário por telefone ou WhatsApp.</p>
+
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="info-item">
+          <div class="icon">📍</div>
+          <div><h4>Endereço</h4><p>Bairro Central, Rua Principal, Bissau, Guiné-Bissau</p></div>
+        </div>
+        <div class="info-item">
+          <div class="icon">📞</div>
+          <div><h4>Telefone</h4><p>+245 956 290 287</p></div>
+        </div>
+        <div class="info-item">
+          <div class="icon">💬</div>
+          <div><h4>WhatsApp</h4><p><a href="https://wa.me/245956290287" target="_blank" rel="noopener">+245 956 290 287</a></p></div>
+        </div>
+        <div class="info-item">
+          <div class="icon">🕒</div>
+          <div><h4>Horário de funcionamento</h4><p>Seg–Sáb: 08h00 – 19h00 · Dom: fechado</p></div>
+        </div>
+      </div>
+
+      <div class="map-embed">
+        <iframe src="https://www.google.com/maps?q=Bissau,Guinea-Bissau&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mapa de localização da Elite Barber"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== RODAPÉ ===================== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="#inicio" class="logo">ELITE <span>BARBER</span></a>
+        <p style="margin-top:12px;">Estilo, precisão e confiança em cada corte.</p>
+        <div class="social-row">
+          <a href="https://facebook.com" aria-label="Facebook" target="_blank" rel="noopener">f</a>
+          <a href="https://instagram.com" aria-label="Instagram" target="_blank" rel="noopener">ig</a>
+          <a href="https://wa.me/245956290287" aria-label="WhatsApp" target="_blank" rel="noopener">wa</a>
+        </div>
+      </div>
+      <div>
+        <h4>Navegação</h4>
+        <ul class="help-list">
+          <li><a href="#servicos">Serviços</a></li>
+          <li><a href="#galeria">Galeria</a></li>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Ajuda — como se cadastrar</h4>
+        <ul class="help-list">
+          <li>Clique em "Agendar Agora" no topo da página</li>
+          <li>Preencha nome, telefone e e-mail</li>
+          <li>Escolha o serviço e a data desejada</li>
+          <li>Selecione um horário disponível (os já ocupados não aparecem)</li>
+          <li>Confirme — receberá a confirmação na hora</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © <span id="year"></span> Elite Barber. Todos os direitos reservados. — <a href="admin.html" >Acesso Administrativo</a>
+    </div>
+  </div>
+</footer>
+
+<a class="whatsapp-float" href="https://wa.me/245956290287" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">💬</a>
+
+<script src="script.js"></script>
+</body>
+</html>
