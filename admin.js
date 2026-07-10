@@ -4,7 +4,7 @@
    =========================================================== */
 
 // >>> Use o MESMO URL do Web App configurado em script.js <<<
-const API_URL = "https://script.google.com/macros/s/AKfycbwqRz4d9LuZVOjeboAf5KQzKK4wsAadFkYro15cp0pangj5GpTInnOqvhw1o8CNrNIz0w/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbxWzfq4UrxIQdQWI--f5cBr_pOtUTaeyyMCHmPuOENZPlr_K7ndo4mfsOkOu6A15iD1SA/exec";
 
 const loginView = document.getElementById("loginView");
 const panelView = document.getElementById("panelView");
@@ -63,8 +63,11 @@ function mostrarPainel() {
   });
   document.getElementById("btnAtualizar").addEventListener("click", carregarAgendamentos);
   document.getElementById("filtroData").addEventListener("change", carregarAgendamentos);
+  document.getElementById("ordenacao").addEventListener("change", () => renderTabela(ultimaLista));
   carregarAgendamentos();
 }
+
+let ultimaLista = []; // guarda os agendamentos já carregados, para reordenar sem novo pedido ao servidor
 
 async function carregarAgendamentos() {
   const wrap = document.getElementById("tableWrap");
@@ -84,7 +87,8 @@ async function carregarAgendamentos() {
     }
 
     renderStats(json.contagem || {}, json.total || 0);
-    renderTabela(json.agendamentos || []);
+    ultimaLista = json.agendamentos || [];
+    renderTabela(ultimaLista);
   } catch (err) {
     wrap.innerHTML = `<p class="empty-state">Erro ao carregar dados do servidor.</p>`;
     console.error(err);
@@ -119,12 +123,23 @@ function renderTabela(lista) {
     return;
   }
 
-  const linhas = lista.map(a => `
+  const ordenacao = document.getElementById("ordenacao").value;
+  const listaOrdenada = [...lista].sort((a, b) => {
+    if (ordenacao === "recente") {
+      // mais recentes primeiro = pela data/hora em que o agendamento foi CRIADO
+      return new Date(b.timestamp) - new Date(a.timestamp);
+    }
+    // padrão: mais próximos primeiro = pela data/hora do PRÓPRIO agendamento
+    return (a.data + a.hora).localeCompare(b.data + b.hora);
+  });
+
+  const linhas = listaOrdenada.map(a => `
     <tr data-id="${a.id}">
       <td>${a.data} · ${a.hora}</td>
       <td>${a.nome}</td>
       <td>${a.telefone}<br><small style="color:var(--muted)">${a.email}</small></td>
       <td>${a.servico}</td>
+      <td><small style="color:var(--muted)">${formatarCriadoEm(a.timestamp)}</small></td>
       <td><span class="status-tag ${a.status.toLowerCase()}">${a.status}</span></td>
       <td class="row-actions">
         <button data-status="Concluído">Concluído</button>
@@ -137,7 +152,7 @@ function renderTabela(lista) {
   wrap.innerHTML = `
     <table class="bookings">
       <thead>
-        <tr><th>Data / Hora</th><th>Cliente</th><th>Contacto</th><th>Serviço</th><th>Estado</th><th>Ações</th></tr>
+        <tr><th>Data / Hora</th><th>Cliente</th><th>Contacto</th><th>Serviço</th><th>Criado em</th><th>Estado</th><th>Ações</th></tr>
       </thead>
       <tbody>${linhas}</tbody>
     </table>
@@ -158,6 +173,17 @@ function renderTabela(lista) {
       if (confirmado) apagarAgendamento(linha.dataset.id);
     });
   });
+}
+
+function formatarCriadoEm(timestamp) {
+  if (!timestamp) return "—";
+  const d = new Date(timestamp);
+  if (isNaN(d.getTime())) return "—";
+  const dia = String(d.getDate()).padStart(2, "0");
+  const mes = String(d.getMonth() + 1).padStart(2, "0");
+  const h = String(d.getHours()).padStart(2, "0");
+  const m = String(d.getMinutes()).padStart(2, "0");
+  return `${dia}/${mes} ${h}:${m}`;
 }
 
 async function apagarAgendamento(id) {
