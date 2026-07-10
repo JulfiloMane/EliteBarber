@@ -5,14 +5,49 @@
    =========================================================== */
 
 // >>> SUBSTITUA pelo URL do seu Web App depois de publicar o Code.gs <<<
-const API_URL = "https://script.google.com/macros/s/AKfycbwqRz4d9LuZVOjeboAf5KQzKK4wsAadFkYro15cp0pangj5GpTInnOqvhw1o8CNrNIz0w/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbxWzfq4UrxIQdQWI--f5cBr_pOtUTaeyyMCHmPuOENZPlr_K7ndo4mfsOkOu6A15iD1SA/exec";
 
-// Horários de atendimento oferecidos (pode ajustar)
-const HORARIOS_PADRAO = [
-  "08:00", "08:30", "09:00", "09:30", "10:00", "10:30",
-  "11:00", "11:30", "14:00", "14:30", "15:00", "15:30",
-  "16:00", "16:30", "17:00", "17:30", "18:00", "18:30"
-];
+// Horário de funcionamento por dia da semana (0 = domingo ... 6 = sábado)
+const EXPEDIENTE = {
+  0: { abertura: "10:00", fecho: "18:00" }, // domingo
+  1: { abertura: "09:00", fecho: "20:00" }, // segunda
+  2: { abertura: "09:00", fecho: "20:00" }, // terça
+  3: { abertura: "09:00", fecho: "20:00" }, // quarta
+  4: { abertura: "09:00", fecho: "20:00" }, // quinta
+  5: { abertura: "09:00", fecho: "20:00" }, // sexta
+  6: { abertura: "09:00", fecho: "20:00" }, // sábado
+};
+const INTERVALO_MINUTOS = 30; // duração de cada horário disponível
+
+/**
+ * Devolve o dia da semana (0=domingo...6=sábado) de uma data "yyyy-MM-dd",
+ * sem depender do fuso horário do navegador.
+ */
+function diaDaSemana(dataStr) {
+  const [ano, mes, dia] = dataStr.split("-").map(Number);
+  return new Date(Date.UTC(ano, mes - 1, dia)).getUTCDay();
+}
+
+/**
+ * Gera a lista de horários possíveis (ex: "09:00", "09:30"...) para a data indicada,
+ * de acordo com o horário de funcionamento desse dia da semana.
+ */
+function gerarHorariosDoDia(dataStr) {
+  const dia = diaDaSemana(dataStr);
+  const { abertura, fecho } = EXPEDIENTE[dia];
+  const [hi, mi] = abertura.split(":").map(Number);
+  const [hf, mf] = fecho.split(":").map(Number);
+  const inicioMin = hi * 60 + mi;
+  const fimMin = hf * 60 + mf;
+
+  const lista = [];
+  for (let m = inicioMin; m <= fimMin - INTERVALO_MINUTOS; m += INTERVALO_MINUTOS) {
+    const h = String(Math.floor(m / 60)).padStart(2, "0");
+    const min = String(m % 60).padStart(2, "0");
+    lista.push(`${h}:${min}`);
+  }
+  return lista;
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("year").textContent = new Date().getFullYear();
@@ -44,8 +79,13 @@ document.addEventListener("DOMContentLoaded", () => {
 ----------------------------------------------------------- */
 async function carregarHorarios(data) {
   const select = document.getElementById("hora");
+  const label = document.querySelector('label[for="hora"]');
   select.innerHTML = `<option value="">A verificar disponibilidade...</option>`;
   select.disabled = true;
+
+  const dia = diaDaSemana(data);
+  const { abertura, fecho } = EXPEDIENTE[dia];
+  label.textContent = `Horário disponível (${abertura} – ${fecho})`;
 
   let ocupados = [];
   try {
@@ -58,7 +98,8 @@ async function carregarHorarios(data) {
     console.warn("Não foi possível consultar horários no servidor:", err);
   }
 
-  const disponiveis = HORARIOS_PADRAO.filter(h => !ocupados.includes(h));
+  const horariosDoDia = gerarHorariosDoDia(data);
+  const disponiveis = horariosDoDia.filter(h => !ocupados.includes(h));
 
   select.innerHTML = `<option value="">Selecione um horário</option>` +
     disponiveis.map(h => `<option value="${h}">${h}</option>`).join("") +
