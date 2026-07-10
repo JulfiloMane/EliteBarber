@@ -31,7 +31,7 @@
   .row-actions button.btn-delete { border-color:var(--rust); color:#e08a6f; }
   .row-actions button.btn-delete:hover { background:var(--rust); color:var(--ivory); border-color:var(--rust); }
   .toolbar { display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:10px;}
-  .toolbar input { background:var(--bg-alt); border:1px solid var(--line); color:var(--ivory); padding:9px 12px; border-radius:var(--radius); }
+  .toolbar input, .toolbar select { background:var(--bg-alt); border:1px solid var(--line); color:var(--ivory); padding:9px 12px; border-radius:var(--radius); font-family:var(--font-body); }
   .empty-state { text-align:center; padding:60px 20px; color:var(--muted); }
   .stats-grid {
     display:grid;
@@ -93,7 +93,7 @@
       <div class="form-msg" id="loginMsg"></div>
     </form>
     <p style="margin-top:18px;font-size:.75rem;color:var(--muted);">
-     
+  
     </p>
   </div>
 </div>
@@ -107,6 +107,10 @@
 
   <div class="toolbar">
     <input type="date" id="filtroData">
+    <select id="ordenacao">
+      <option value="proximo">Mais próximos primeiro</option>
+      <option value="recente">Mais recentes (criados agora)</option>
+    </select>
     <button class="btn outline" id="btnAtualizar">Atualizar lista</button>
   </div>
 
